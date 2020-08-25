@@ -1,0 +1,21 @@
+test_name: Delete Store
+
+marks:
+    - POS
+stages:
+
+    -   name: Delete Domain
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/store?store_code=q4"
+            method: DELETE
+
+        response:
+            status_code: 404
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "msg": "Store doesn't exist" ,
+                            "status": 1
+                        }

@@ -1,0 +1,24 @@
+test_name: Get Staff
+
+marks:
+    - POS
+
+stages:
+
+    -   name: Get Staff Detail
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/employee"
+            method: GET
+            params:
+
+                sales_rep_id: 14
+
+        response:
+            status_code: 200
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "result.employees[0].store_code":"store21"
+                        }

@@ -1,0 +1,108 @@
+---
+test_name:  Add Staff Details
+
+marks:
+    - POS
+    -   usefixtures:
+            - getrandomemail
+            - getrandommobile
+stages:
+
+    -   name: Add Employee
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/employee"
+            method: POST
+            json:
+                "store_code": "store22"
+                "name": "test automation"
+                "employee_id": "amp1"
+                "status": "active"
+                "title": "Mr"
+                "role": "POS - Store Staff"
+                "contractor_name": "testautomate"
+                "email": "{getrandomemail}"
+                "phone": "{getrandommobile}"
+                "alternate_phone": "9999999999"
+
+        response:
+            status_code: 200
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "msg": "Employee Details",
+                            "result.employees[0].sales_rep_name":"test automation"
+                        }
+---
+test_name: Add Staff Details
+
+marks:
+    - POS
+
+stages:
+
+    -   name: Invalid Email
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/employee"
+            method: POST
+            json:
+                "store_code": "store21"
+                "name": "testautomation"
+                "employee_id": "amp1"
+                "status": "active"
+                "title": "Mr"
+                "role": "POS - Store Staff"
+                "contractor_name": "test"
+                "email": "t@#12@gmail.com"
+                "phone": "872542072"
+                "alternate_phone": "8766657995"
+
+
+        response:
+            status_code: 400
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "msg": "ValidationError (Employee:None) (Invalid email address: t@#12@gmail.com: ['email'])",
+                            "result.employees[0].sales_rep_name":"null",
+                            "status":1
+                        }
+---
+test_name: Add Staff Details
+
+marks:
+    - POS
+
+stages:
+
+    -   name: Invalid Role
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/employee"
+            method: POST
+            json:
+                "store_code": "store21"
+                "name": "testautomation"
+                "employee_id": "amp1"
+                "status": "active"
+                "title": "Mr"
+                "role": "staff"
+                "contractor_name": "test"
+                "email": "t@#12@gmail.com"
+                "phone": "872542072"
+                "alternate_phone": "8766657995"
+
+
+        response:
+            status_code: 400
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "msg": "ValidationError (Employee:5eaad3a88797c201dcacc7be) (Value must be one of ['POS - Store Staff', 'POS - Store Manager']: ['role'])"
+                            "status":1
+                        }
+

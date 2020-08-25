@@ -1,0 +1,191 @@
+test_name: Update Store
+
+marks:
+    - POS
+    -   usefixtures:
+            - storeid
+stages:
+
+    -   name: Create Store
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/store"
+            method: PUT
+            json:
+                "store_code": "{storeid}"
+                "parent_company": "FSN Brands"
+                "domain": "Beauty"
+                "franchisee": "Yes"
+                "gst_number": "06AACCF5505E1Z3"
+                "franchisee_gst_number": "123456ABCDE"
+                "tax_zone": "dummyvalue"
+                "live_date": "24/11/2003"
+                "phone": "092222 01010"
+                "alternate_phone": "dummyvalue"
+                "email": "rahul.kanwadia@nykaa.com"
+                "alternate_email": "dummyvalue"
+                "sell_to_ecom": "Yes"
+                "cluster": "West"
+                "image_expand": "dummyvalue"
+                "image_closed": "dummyvalue"
+                "open_time": "9:00"
+                "close_time": "9:00"
+                "google_map_link": "dummyvalue"
+                "get_directions_link": "dummyvalue"
+                "created_by": "ayushja"
+                "udf1": "dummyvalue"
+                "udf2": "dummyvalue"
+                "udf3": "dummyvalue"
+                "udf4": "dummyvalue"
+                "udf5": "dummyvalue"
+                "format": "Kiosk"
+                "source_warehouse": "T3 0"
+                "status": "active"
+                "updated_by": "ayushja"
+                "store_name": "Nykaa On Trend Ambience Gurgaon"
+                "short_name": "Ambience Gurgaon"
+                "store_type": "Store"
+                "city": "Gurgaon"
+                "state": "Haryana"
+                "country": "India"
+                "latitude": 80.4532
+                "longitude": 93.892345
+                "address": "Unit No. G-060A, NH 8, Ambience Island, DLF Phase 3, Sector 24, Gurugram, Haryana 122002"
+                "pincode": 122002
+
+        response:
+            status_code: 200
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "msg": "Store Details"
+                        }
+---
+test_name: Update Store
+
+marks:
+    - POS
+    -   usefixtures:
+            - store_id
+stages:
+
+    -   name: Passing invalid store_id
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/store"
+            method: POST
+            json:
+                "store_code": "A15s"
+                "parent_company": "FSN Brands"
+                "domain": "Beauty"
+                "franchisee": "Yes"
+                "gst_number": "06AACCF5505E1Z3"
+                "franchisee_gst_number": "123456ABCDE"
+                "tax_zone": "dummyvalue"
+                "live_date": "24/11/2003"
+                "phone": "092222 01010"
+                "alternate_phone": "dummyvalue"
+                "email": "rahul.kanwadia@nykaa.com"
+                "alternate_email": "dummyvalue"
+                "sell_to_ecom": "Yes"
+                "cluster": "West"
+                "image_expand": "dummyvalue"
+                "image_closed": "dummyvalue"
+                "open_time": "9:00"
+                "close_time": "9:00"
+                "google_map_link": "dummyvalue"
+                "get_directions_link": "dummyvalue"
+                "created_by": "ayushja"
+                "udf1": "dummyvalue"
+                "udf2": "dummyvalue"
+                "udf3": "dummyvalue"
+                "udf4": "dummyvalue"
+                "udf5": "dummyvalue"
+                "format": "Kiosk"
+                "source_warehouse": "T3 0"
+                "status": "active"
+                "updated_by": "ayushja"
+                "store_name": "Nykaa On Trend Ambience Gurgaon"
+                "short_name": "Ambience Gurgaon"
+                "store_type": "Store"
+                "city": "Gurgaon"
+                "state": "Haryana"
+                "country": "India"
+                "latitude": 80.4532
+                "longitude": 93.892345
+                "address": "Unit No. G-060A, NH 8, Ambience Island, DLF Phase 3, Sector 24, Gurugram, Haryana 122002"
+                "pincode": 122002
+
+        response:
+            status_code: 400
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "status": 1
+                        }
+---
+test_name: Update Store
+
+marks:
+    - POS
+    -   usefixtures:
+            - store_id
+stages:
+
+    -   name: Invalid Domain
+
+        request:
+            url: "{protocol:s}://{domain:s}.{preprod_url:s}/retail/store"
+            method: POST
+            json:
+                "store_code": "{store_id}"
+                "parent_company": "FSN Brands"
+                "domain": "Retail"
+                "franchisee": "Yes"
+                "gst_number": "06AACCF5505E1Z3"
+                "franchisee_gst_number": "123456ABCDE"
+                "tax_zone": "dummyvalue"
+                "live_date": "24/11/2003"
+                "phone": "092222 01010"
+                "alternate_phone": "dummyvalue"
+                "email": "rahul.kanwadia@nykaa.com"
+                "alternate_email": "dummyvalue"
+                "sell_to_ecom": "Yes"
+                "cluster": "West"
+                "image_expand": "dummyvalue"
+                "image_closed": "dummyvalue"
+                "open_time": "9:00"
+                "close_time": "9:00"
+                "google_map_link": "dummyvalue"
+                "get_directions_link": "dummyvalue"
+                "created_by": "ayushja"
+                "udf1": "dummyvalue"
+                "udf2": "dummyvalue"
+                "udf3": "dummyvalue"
+                "udf4": "dummyvalue"
+                "udf5": "dummyvalue"
+                "format": "Kiosk"
+                "source_warehouse": "T3 0"
+                "status": "active"
+                "updated_by": "ayushja"
+                "store_name": "Nykaa On Trend Ambience Gurgaon"
+                "short_name": "Ambience Gurgaon"
+                "store_type": "Store"
+                "city": "Gurgaon"
+                "state": "Haryana"
+                "country": "India"
+                "latitude": 80.4532
+                "longitude": 93.892345
+                "address": "Unit No. G-060A, NH 8, Ambience Island, DLF Phase 3, Sector 24, Gurugram, Haryana 122002"
+                "pincode": 122002
+
+        response:
+            status_code: 400
+            verify_response_with:
+                -   function: testing_utils:check_jsonpath_value
+                    extra_kwargs:
+                        json_path_value: {
+                            "errors.domain": "'Retail' is not one of ['Beauty', 'Fashion', 'Mixed']"
+                        }
